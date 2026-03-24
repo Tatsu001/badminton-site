@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<title>タクティカル（戦術） -- バドミントン座学</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #fafaf8;
+  --fg: #1a1a1a;
+  --accent: #1a6b4a;
+  --accent-light: #e8f5ee;
+  --muted: #6b6b6b;
+  --line: #e0e0dc;
+  --sidebar-bg: #f0f0ec;
+  --sidebar-w: 264px;
+  --topbar-h: 50px;
+  --font-body: 'Zen Kaku Gothic New', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; color-scheme: light only; }
+body { font-family: var(--font-body); background-color: #fafaf8 !important; color: #1a1a1a !important; font-size: 15px; line-height: 1.85; }
+
+/* ── Topbar ── */
+.topbar {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  height: var(--topbar-h);
+  background: rgba(250,250,248,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  color: var(--fg);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+}
+.topbar-brand {
+  font-weight: 700; font-size: 14px; color: var(--fg);
+  text-decoration: none; letter-spacing: 0.02em;
+}
+.mobile-toggle { display:none; background:none; border:none; cursor:pointer; padding:6px; }
+.mobile-toggle span {
+  display:block; width:20px; height:2px; background:var(--fg);
+  margin:4px 0; transition:0.2s;
+}
+
+/* ── Layout ── */
+.layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: 100vh;
+  padding-top: var(--topbar-h);
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  background: #f0f0ec;
+  border-right: 1px solid var(--line);
+  position: sticky; top: var(--topbar-h);
+  height: calc(100vh - var(--topbar-h));
+  overflow-y: auto;
+  color: #1a1a1a;
+}
+.sidebar-inner { padding: 20px 0 40px; }
+.sidebar-home {
+  display: block; padding: 8px 24px 16px;
+  font-size: 12px; font-family: var(--font-mono);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+  border-bottom: 1px solid var(--line); margin-bottom: 8px;
+}
+.sidebar-home:hover { color: var(--accent); }
+.sidebar-section { padding: 6px 0; }
+.sidebar-section-title {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); padding: 10px 24px 4px;
+}
+.sidebar-link {
+  display: block; padding: 6px 24px 6px 28px;
+  font-size: 13px; color: #555; text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.sidebar-link:hover { color: var(--fg); background: rgba(0,0,0,0.025); }
+.sidebar-link.active {
+  color: var(--accent); font-weight: 500;
+  border-left-color: var(--accent); background: var(--accent-light);
+}
+
+/* ── Main content ── */
+.main-content {
+  padding: 44px 60px 100px;
+  max-width: 860px;
+  min-width: 0;
+  background-color: #fafaf8;
+  color: #1a1a1a;
+}
+.breadcrumb {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--muted); margin-bottom: 28px; letter-spacing: 0.03em;
+}
+.breadcrumb span { color: var(--accent); }
+.main-content h1 {
+  font-size: 30px; font-weight: 700; margin-bottom: 8px;
+  letter-spacing: -0.01em; line-height: 1.3;
+}
+.subtitle {
+  font-size: 14px; color: var(--muted); margin-bottom: 40px;
+  line-height: 1.7;
+}
+
+/* ── Article body typography ── */
+.article-body h2 {
+  font-size: 21px; font-weight: 700;
+  margin: 52px 0 14px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent); color: var(--fg);
+}
+.article-body h3 {
+  font-size: 17px; font-weight: 700;
+  margin: 36px 0 10px; color: var(--fg);
+  padding-left: 14px; border-left: 3px solid var(--accent);
+}
+.article-body h4 {
+  font-size: 15px; font-weight: 700;
+  margin: 28px 0 8px; color: #333;
+}
+.article-body p {
+  margin-bottom: 14px; color: #333;
+}
+.article-body ul, .article-body ol {
+  margin: 0 0 16px 20px; color: #444;
+}
+.article-body li { margin-bottom: 6px; }
+.article-body li strong { color: var(--fg); }
+.article-body strong { font-weight: 600; }
+
+/* tables */
+.article-body table {
+  width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px;
+}
+.article-body th {
+  background: var(--sidebar-bg); text-align: left; padding: 9px 14px;
+  font-weight: 600; font-size: 12px; color: var(--muted);
+  border-bottom: 2px solid var(--line);
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.article-body td {
+  padding: 10px 14px; border-bottom: 1px solid var(--line); color: #444;
+}
+.article-body tr:last-child td { border-bottom: none; }
+
+/* callout */
+.article-body blockquote {
+  background: var(--accent-light); border-left: 3px solid var(--accent);
+  padding: 16px 20px; margin: 20px 0; font-size: 14px;
+  color: #1a5a3a; border-radius: 0 4px 4px 0;
+}
+.article-body blockquote p { color: #1a5a3a; margin-bottom: 6px; }
+.article-body blockquote p:last-child { margin-bottom: 0; }
+.article-body blockquote strong { color: #115a35; }
+
+/* code */
+.article-body code {
+  background: #eee; padding: 1px 5px; border-radius: 3px;
+  font-family: var(--font-mono); font-size: 0.88em;
+}
+
+/* ── Index page ── */
+.index-content { padding-top: 60px; max-width: 720px; }
+.index-hero-title {
+  font-size: 38px; font-weight: 700; letter-spacing: -0.02em;
+  margin-bottom: 12px; line-height: 1.25;
+}
+.index-hero-sub {
+  font-size: 15px; color: var(--muted); line-height: 1.8;
+  margin-bottom: 48px;
+}
+.index-section-group { margin-bottom: 48px; }
+.index-group-label {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+}
+.index-card {
+  display: block; text-decoration: none; color: var(--fg);
+  padding: 18px 20px; border: 1px solid var(--line);
+  margin-bottom: -1px; transition: background 0.15s, border-color 0.15s;
+}
+.index-card:first-of-type { border-radius: 5px 5px 0 0; }
+.index-card:last-of-type { border-radius: 0 0 5px 5px; }
+.index-card:hover { background: var(--accent-light); border-color: #c8e6d5; z-index:1; position:relative; }
+.index-card-title { font-weight: 700; font-size: 15px; margin-bottom: 3px; }
+.index-card-desc { font-size: 13px; color: var(--muted); }
+.index-card-arrow {
+  float: right; color: var(--accent); font-size: 18px;
+  margin-top: 4px; opacity:0; transition: opacity 0.15s;
+}
+.index-card:hover .index-card-arrow { opacity:1; }
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed; left: -280px; top: var(--topbar-h);
+    width: 280px; height: calc(100vh - var(--topbar-h));
+    z-index: 90; transition: left 0.25s;
+    box-shadow: none;
+  }
+  .sidebar.open { left: 0; box-shadow: 4px 0 20px rgba(0,0,0,0.08); }
+  .mobile-toggle { display: block; }
+  .main-content { padding: 32px 20px 80px; }
+}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="index.html" class="topbar-brand">バドミントン座学</a>
+  <button class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-inner">
+      <a href="index.html" class="sidebar-home">TOP</a>
+      <div class="sidebar-section">
+<div class="sidebar-section-title">概要編</div>
+<a class="sidebar-link" href="rules.html">ルール（前提知識）</a>
+<a class="sidebar-link" href="technical.html">テクニカル（個人技術）</a>
+<a class="sidebar-link active" href="tactical.html">タクティカル（戦術）</a>
+<a class="sidebar-link" href="mental.html">メンタル（心理）</a>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-section-title">実践編</div>
+<a class="sidebar-link" href="principles.html">戦略の根本原則</a>
+<a class="sidebar-link" href="shots.html">球種の実践的理解</a>
+<a class="sidebar-link" href="singles.html">シングルスの試合運び</a>
+<a class="sidebar-link" href="doubles.html">ダブルスの連携</a>
+<a class="sidebar-link" href="framework.html">判断と応用技術</a>
+</div>
+    </div>
+  </nav>
+  
+    <div class="main-content">
+      <div class="breadcrumb">概要編 / <span>タクティカル（戦術）</span></div>
+      <h1>タクティカル（戦術）</h1>
+      <p class="subtitle">ポジショニング、シングルス・ダブルス戦術、相手分析</p>
+      <div class="article-body">
+        <h3 id="2-1">2-1. ポジショニング</h3>
+<h4 id="_1">ホームポジション</h4>
+<ul>
+<li><strong>シングルス</strong>: コート中央のやや後方。ショートサービスラインとバックバウンダリーラインの中間あたりが目安。ここからコートの4隅すべてに最短距離で移動できる。</li>
+<li><strong>ダブルス</strong>: 状況によりフォーメーションが変わるため、固定のホームポジションは存在しないが、基本的にはペアでコート全体をカバーできる位置取りを意識する。</li>
+</ul>
+<h4 id="_2">ショット後の戻り位置</h4>
+<p>打ったショットの種類と相手の体勢によって、戻る位置を微調整する。自分が打ったショットに対して相手が打てるコースの中心に立つのが基本原則。例えば、ストレートにクリアを打った場合、相手はストレートにもクロスにも返せるため、その中心に戻る。</p>
+<h4 id="_3">ダブルスのフォーメーション</h4>
+<ul>
+<li><strong>トップ＆バック（前後陣形）</strong>: 前衛と後衛に分かれる攻撃的なフォーメーション。後衛がスマッシュを打ち、前衛がネット前で決め球を狙う。攻めの基本陣形。</li>
+<li><strong>サイドバイサイド（左右陣形）</strong>: 2人が横並びになる守備的なフォーメーション。相手のスマッシュなど攻撃を受ける際にコートを左右に分担して守る。</li>
+<li><strong>中間形（ローテーション中）</strong>: トップ＆バックとサイドバイサイドの切り替え途中の形。攻守の切り替え時に発生する。</li>
+</ul>
+<h4 id="_4">ポジション取りの原則</h4>
+<p>相手が打てるすべてのコースを想定し、そのコースの中心（もしくは最も確率の高いコースに寄った位置）に立つ。相手の体勢が崩れているなら、返球コースは限られるのでそこに寄って構える。</p>
+<hr />
+<h3 id="2-2">2-2. シングルス戦術</h3>
+<h4 id="_5">攻め</h4>
+<ul>
+<li><strong>4隅への揺さぶり</strong>: コートの4隅に打ち分けて相手を走らせる。特に対角線上の揺さぶり（前→後、左→右）が効果的。人間は前後の動きに弱いため、前後の揺さぶりを意識する。</li>
+<li><strong>スマッシュからの決め球パターン</strong>: スマッシュ単体で決まることは少ない。スマッシュで相手の体勢を崩し、甘い返球をネット前で仕留めるのが基本パターン。</li>
+<li><strong>テンポの緩急</strong>: 速い球（ドリブンクリア、スマッシュ）と遅い球（ハイクリア、ドロップ）を織り交ぜて相手のリズムを崩す。</li>
+<li><strong>ボディ攻撃</strong>: 相手の体の正面を狙う。体の正面はラケット操作が最も難しい打点であり、判断の遅れやミスを誘える。</li>
+<li><strong>ウィニングショットの選択</strong>: 相手の体勢が崩れた瞬間を見極めて決め球を打つ。無理に決めに行かず、崩してから決めるのが鉄則。</li>
+</ul>
+<h4 id="_6">守り</h4>
+<ul>
+<li><strong>スマッシュレシーブ</strong>: ストレートに低く返すのが基本。余裕があればクロスにロブを上げて相手を動かす。</li>
+<li><strong>ロブで時間を稼ぐ</strong>: 体勢が崩れた際にハイクリアやハイロブを使って滞空時間を稼ぎ、ホームポジションに戻る。</li>
+<li><strong>クロスカウンター</strong>: 相手がストレートに攻めてきたときにクロスに返球して逆を突く。リスクはあるが成功すれば一気に攻守が入れ替わる。</li>
+<li><strong>守りから攻めへの切り替え</strong>: 相手のスマッシュが甘くなった瞬間を見逃さず、ドライブレシーブやカウンターロブで攻守を逆転させる。</li>
+</ul>
+<h4 id="_7">ニュートラル</h4>
+<ul>
+<li><strong>ラリーの組み立て</strong>: どちらが有利でもない状況で、相手の体勢を崩すための配球を行う。コースの打ち分けと緩急の使い分けが鍵。</li>
+<li><strong>コース配分</strong>: ストレートとクロスの比率を意識する。基本はストレート多め（戻りやすい、ミスしにくい）で、ここぞという時にクロスを使う。</li>
+<li><strong>相手の体勢を見た判断</strong>: 相手が良い体勢なら無理に攻めず安全なコースへ、相手の体勢が崩れていたら攻撃的なショットを選択する。</li>
+</ul>
+<hr />
+<h3 id="2-3">2-3. ダブルス戦術</h3>
+<h4 id="_8">攻め</h4>
+<ul>
+<li><strong>トップ＆バックの攻撃パターン</strong>: 後衛がスマッシュやカットで攻め、前衛がネット前で相手の返球を叩く連携が基本。</li>
+<li><strong>スマッシュ＋前衛プッシュの連携</strong>: 後衛のスマッシュで相手を崩し、甘い返球を前衛がプッシュで決める。最も基本的な得点パターン。</li>
+<li><strong>連続攻撃の維持</strong>: 攻め側はロブを上げさせないよう（自分たちがトップ＆バックを維持できるよう）配球する。ハーフスマッシュやカットで攻撃を切らさない。</li>
+<li><strong>サーブからの3球目攻撃</strong>: ショートサーブ→相手のリターンを前衛が叩く、という流れ。サーブの質が高いほど3球目のチャンスが広がる。ダブルスではサーブ後の展開が極めて重要。</li>
+<li><strong>「人を攻める」vs「コースを攻める」</strong>: 相手ペアの弱い方を集中的に狙う戦術と、2人の間やオープンスペースを狙う戦術の2つが基本。</li>
+<li><strong>ボディ攻撃・2人の間を狙う</strong>: サイドバイサイドの守備陣形に対して、2人の間（特にセンター付近）を狙うと、どちらが取るか迷いが生じて返球が甘くなる。</li>
+</ul>
+<h4 id="_9">守り</h4>
+<ul>
+<li><strong>サイドバイサイドの守備分担</strong>: コートを左右に分担し、それぞれの担当エリアのシャトルを処理する。センター付近のシャトルは事前にどちらが取るか決めておく。</li>
+<li><strong>レシーブからの攻守切り替え</strong>: 低いドライブレシーブで相手の攻撃を封じ、ロブではなくドライブで返すことで攻守を入れ替える意識。</li>
+<li><strong>ロブの使い方</strong>: 逃げのロブ（高くて奥）は体勢を立て直す時間を稼ぐが、相手に攻撃の時間も与える。アタックロブ（低くて速い奥への返球）は攻守を入れ替えるチャンスを作るが、カウンターのリスクもある。</li>
+</ul>
+<h4 id="_10">ニュートラル</h4>
+<ul>
+<li><strong>ローテーションの判断基準</strong>: いつフォーメーションを切り替えるか。基本は「前に出て打った人がそのまま前衛に入る」「後ろに下がった人が後衛になる」という自然なローテーション。</li>
+<li><strong>ドライブ戦でのポジション</strong>: ドライブの応酬ではサイドバイサイドに近い形になるが、どちらかが有利なショットを打てたらトップ＆バックに移行する。</li>
+<li><strong>サーブレシーブからの展開</strong>: レシーブ側は3球目を叩かれないよう、ネット前に沈めるか、速いドライブで返して主導権を奪う。</li>
+</ul>
+<h4 id="_11">ダブルス固有の要素</h4>
+<ul>
+<li><strong>パートナーとのコミュニケーション</strong>: 声かけ、サイン、試合間の打ち合わせ。お互いの調子や相手の傾向を共有する。</li>
+<li><strong>役割分担</strong>: 前衛はネット前の処理と決め球。後衛はスマッシュとコート後方のカバー。ただし状況に応じてローテーションする。</li>
+<li><strong>ミックスダブルス特有の戦術</strong>: 一般的に女性が前衛、男性が後衛になることが多い。女性を狙った攻撃が多くなるため、女性のレシーブ力とネット前の技術が重要になる。</li>
+</ul>
+<hr />
+<h3 id="2-4">2-4. 相手分析・試合準備</h3>
+<ul>
+<li><strong>相手の弱点の見つけ方</strong>: バックハンド側が弱いか、フットワークが遅いか、スタミナに不安があるか、ネット前が苦手かなどを試合序盤や過去の試合映像から分析する。</li>
+<li><strong>試合中の観察ポイント</strong>: 相手の打つ前のラケット位置・足の向き・体の開き方から次のショットを予測する。癖（同じパターンで打つ傾向）を見つけると有利になる。</li>
+<li><strong>敵タイプ別の対策</strong>:</li>
+<li><strong>攻撃型</strong>: スマッシュが武器の相手には高い打点で打たせないよう、ドライブやネット前の球を多用して沈める。</li>
+<li><strong>守備型（粘り型）</strong>: ラリーが長くなるのを嫌がらず、じっくり崩す。焦って無理攻めしない。</li>
+<li><strong>ネット型</strong>: ネット前が得意な相手にはロブやクリアで後方に追い込む。ヘアピン勝負を避ける。</li>
+<li><strong>コントロール型</strong>: 配球が巧みな相手にはテンポを変えて崩す。意表をつくショットを織り交ぜる。</li>
+<li><strong>試合前のゲームプラン策定</strong>: 自分の強みを活かし、相手の弱点を突く基本戦略を立てる。「序盤はクリアで相手のフットワークを確認する」「バック奥を狙って様子を見る」など具体的に。</li>
+<li><strong>試合中のプラン修正</strong>: ゲームプラン通りにいかない場合、セット間やインターバルで戦術を修正する。相手が対策してきた場合の代替プランも用意しておく。</li>
+</ul>
+<hr />
+      </div>
+    </div>
+    
+</div>
+</body>
+</html>

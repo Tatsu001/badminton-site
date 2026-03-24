@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<title>戦略の根本原則 -- バドミントン座学</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #fafaf8;
+  --fg: #1a1a1a;
+  --accent: #1a6b4a;
+  --accent-light: #e8f5ee;
+  --muted: #6b6b6b;
+  --line: #e0e0dc;
+  --sidebar-bg: #f0f0ec;
+  --sidebar-w: 264px;
+  --topbar-h: 50px;
+  --font-body: 'Zen Kaku Gothic New', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; color-scheme: light only; }
+body { font-family: var(--font-body); background-color: #fafaf8 !important; color: #1a1a1a !important; font-size: 15px; line-height: 1.85; }
+
+/* ── Topbar ── */
+.topbar {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  height: var(--topbar-h);
+  background: rgba(250,250,248,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  color: var(--fg);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+}
+.topbar-brand {
+  font-weight: 700; font-size: 14px; color: var(--fg);
+  text-decoration: none; letter-spacing: 0.02em;
+}
+.mobile-toggle { display:none; background:none; border:none; cursor:pointer; padding:6px; }
+.mobile-toggle span {
+  display:block; width:20px; height:2px; background:var(--fg);
+  margin:4px 0; transition:0.2s;
+}
+
+/* ── Layout ── */
+.layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: 100vh;
+  padding-top: var(--topbar-h);
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  background: #f0f0ec;
+  border-right: 1px solid var(--line);
+  position: sticky; top: var(--topbar-h);
+  height: calc(100vh - var(--topbar-h));
+  overflow-y: auto;
+  color: #1a1a1a;
+}
+.sidebar-inner { padding: 20px 0 40px; }
+.sidebar-home {
+  display: block; padding: 8px 24px 16px;
+  font-size: 12px; font-family: var(--font-mono);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+  border-bottom: 1px solid var(--line); margin-bottom: 8px;
+}
+.sidebar-home:hover { color: var(--accent); }
+.sidebar-section { padding: 6px 0; }
+.sidebar-section-title {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); padding: 10px 24px 4px;
+}
+.sidebar-link {
+  display: block; padding: 6px 24px 6px 28px;
+  font-size: 13px; color: #555; text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.sidebar-link:hover { color: var(--fg); background: rgba(0,0,0,0.025); }
+.sidebar-link.active {
+  color: var(--accent); font-weight: 500;
+  border-left-color: var(--accent); background: var(--accent-light);
+}
+
+/* ── Main content ── */
+.main-content {
+  padding: 44px 60px 100px;
+  max-width: 860px;
+  min-width: 0;
+  background-color: #fafaf8;
+  color: #1a1a1a;
+}
+.breadcrumb {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--muted); margin-bottom: 28px; letter-spacing: 0.03em;
+}
+.breadcrumb span { color: var(--accent); }
+.main-content h1 {
+  font-size: 30px; font-weight: 700; margin-bottom: 8px;
+  letter-spacing: -0.01em; line-height: 1.3;
+}
+.subtitle {
+  font-size: 14px; color: var(--muted); margin-bottom: 40px;
+  line-height: 1.7;
+}
+
+/* ── Article body typography ── */
+.article-body h2 {
+  font-size: 21px; font-weight: 700;
+  margin: 52px 0 14px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent); color: var(--fg);
+}
+.article-body h3 {
+  font-size: 17px; font-weight: 700;
+  margin: 36px 0 10px; color: var(--fg);
+  padding-left: 14px; border-left: 3px solid var(--accent);
+}
+.article-body h4 {
+  font-size: 15px; font-weight: 700;
+  margin: 28px 0 8px; color: #333;
+}
+.article-body p {
+  margin-bottom: 14px; color: #333;
+}
+.article-body ul, .article-body ol {
+  margin: 0 0 16px 20px; color: #444;
+}
+.article-body li { margin-bottom: 6px; }
+.article-body li strong { color: var(--fg); }
+.article-body strong { font-weight: 600; }
+
+/* tables */
+.article-body table {
+  width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px;
+}
+.article-body th {
+  background: var(--sidebar-bg); text-align: left; padding: 9px 14px;
+  font-weight: 600; font-size: 12px; color: var(--muted);
+  border-bottom: 2px solid var(--line);
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.article-body td {
+  padding: 10px 14px; border-bottom: 1px solid var(--line); color: #444;
+}
+.article-body tr:last-child td { border-bottom: none; }
+
+/* callout */
+.article-body blockquote {
+  background: var(--accent-light); border-left: 3px solid var(--accent);
+  padding: 16px 20px; margin: 20px 0; font-size: 14px;
+  color: #1a5a3a; border-radius: 0 4px 4px 0;
+}
+.article-body blockquote p { color: #1a5a3a; margin-bottom: 6px; }
+.article-body blockquote p:last-child { margin-bottom: 0; }
+.article-body blockquote strong { color: #115a35; }
+
+/* code */
+.article-body code {
+  background: #eee; padding: 1px 5px; border-radius: 3px;
+  font-family: var(--font-mono); font-size: 0.88em;
+}
+
+/* ── Index page ── */
+.index-content { padding-top: 60px; max-width: 720px; }
+.index-hero-title {
+  font-size: 38px; font-weight: 700; letter-spacing: -0.02em;
+  margin-bottom: 12px; line-height: 1.25;
+}
+.index-hero-sub {
+  font-size: 15px; color: var(--muted); line-height: 1.8;
+  margin-bottom: 48px;
+}
+.index-section-group { margin-bottom: 48px; }
+.index-group-label {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+}
+.index-card {
+  display: block; text-decoration: none; color: var(--fg);
+  padding: 18px 20px; border: 1px solid var(--line);
+  margin-bottom: -1px; transition: background 0.15s, border-color 0.15s;
+}
+.index-card:first-of-type { border-radius: 5px 5px 0 0; }
+.index-card:last-of-type { border-radius: 0 0 5px 5px; }
+.index-card:hover { background: var(--accent-light); border-color: #c8e6d5; z-index:1; position:relative; }
+.index-card-title { font-weight: 700; font-size: 15px; margin-bottom: 3px; }
+.index-card-desc { font-size: 13px; color: var(--muted); }
+.index-card-arrow {
+  float: right; color: var(--accent); font-size: 18px;
+  margin-top: 4px; opacity:0; transition: opacity 0.15s;
+}
+.index-card:hover .index-card-arrow { opacity:1; }
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed; left: -280px; top: var(--topbar-h);
+    width: 280px; height: calc(100vh - var(--topbar-h));
+    z-index: 90; transition: left 0.25s;
+    box-shadow: none;
+  }
+  .sidebar.open { left: 0; box-shadow: 4px 0 20px rgba(0,0,0,0.08); }
+  .mobile-toggle { display: block; }
+  .main-content { padding: 32px 20px 80px; }
+}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="index.html" class="topbar-brand">バドミントン座学</a>
+  <button class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-inner">
+      <a href="index.html" class="sidebar-home">TOP</a>
+      <div class="sidebar-section">
+<div class="sidebar-section-title">概要編</div>
+<a class="sidebar-link" href="rules.html">ルール（前提知識）</a>
+<a class="sidebar-link" href="technical.html">テクニカル（個人技術）</a>
+<a class="sidebar-link" href="tactical.html">タクティカル（戦術）</a>
+<a class="sidebar-link" href="mental.html">メンタル（心理）</a>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-section-title">実践編</div>
+<a class="sidebar-link active" href="principles.html">戦略の根本原則</a>
+<a class="sidebar-link" href="shots.html">球種の実践的理解</a>
+<a class="sidebar-link" href="singles.html">シングルスの試合運び</a>
+<a class="sidebar-link" href="doubles.html">ダブルスの連携</a>
+<a class="sidebar-link" href="framework.html">判断と応用技術</a>
+</div>
+    </div>
+  </nav>
+  
+    <div class="main-content">
+      <div class="breadcrumb">実践編 / <span>戦略の根本原則</span></div>
+      <h1>戦略の根本原則</h1>
+      <p class="subtitle">なぜ奥に飛ばすのか、高さの支配、3大原則</p>
+      <div class="article-body">
+        <h3 id="1-1">1-1. 得点の構造を理解する</h3>
+<p>バドミントンの得点は、大きく分けて3つの経路でしか生まれない。</p>
+<ol>
+<li><strong>相手がアウト・ネットなどのミスをする（相手の失点）</strong></li>
+<li><strong>こちらの決め球が決まる（自分の得点）</strong></li>
+<li><strong>相手が返球できない位置にシャトルを落とす（配球による得点）</strong></li>
+</ol>
+<p>初中級レベルの試合では、得点の大半が「1. 相手のミス」で決まる。つまり、自分がミスをしないだけで勝率は大幅に上がる。ここが最も重要な出発点であり、華麗な決め球を追い求める前に「ミスを減らす」ことが勝利への最短経路。</p>
+<p>上級レベルになると相手もミスをしなくなるため、「2. 決め球」と「3. 配球」の精度が勝敗を分ける。</p>
+<h3 id="1-2-3">1-2. バドミントンの3大原則</h3>
+<p>あらゆるショット選択・配球・戦術の根底にある原則は以下の3つ。</p>
+<h4 id="1">原則① 「シャトルは沈めた方が有利、上げた方が不利」</h4>
+<p>バドミントンの最も根本的な原則。ネットより高い位置で打てば攻撃的なショット（スマッシュ、プッシュ）が打てるが、ネットより低い位置で打つと上に返すしかなく、相手にチャンスを与える。</p>
+<p>だからこそ「相手にシャトルを上げさせる」配球が戦術の基本になる。ダブルスでは特にこの原則が顕著で、「シャトルを沈める＝攻撃権を維持する」「シャトルを上げる＝攻撃権を渡す」という図式が常に成り立つ。</p>
+<h4 id="2">原則② 「相手を動かし、自分は動かない」</h4>
+<p>相手を前後左右に大きく動かすことで体勢を崩し、甘い返球を引き出す。一方で自分はなるべくホームポジション付近を維持し、少ない移動で効率よくラリーを組み立てる。シングルスでは「4隅への打ち分け」がこの原則の直接的な表現。</p>
+<p>相手が動く距離が大きいほど、体勢が崩れてミスの確率が上がり、返球の質が下がる。</p>
+<h4 id="3">原則③ 「相手の時間を奪う」</h4>
+<p>速いショット、低い弾道のショット、タイミングを外すショットで相手の判断・移動の時間を奪う。時間を奪われた相手は、十分な体勢で打てなくなり、返球の精度が落ちる。逆にハイクリアやハイロブは時間を「与える」ショットであり、自分の体勢を立て直す代わりに相手にも準備の時間を与えてしまう。</p>
+<h3 id="1-3">1-3. なぜ「奥に飛ばす」のか ─ クリアの戦略的意味</h3>
+<p>初心者がまず覚えるべきショットがクリアである理由は、単に「遠くに飛ばすのが基本だから」ではない。</p>
+<ul>
+<li><strong>奥に飛ばす ＝ 相手をコート後方に追いやる ＝ ネット前にスペースができる</strong>。そこにドロップやヘアピンを落とせば、相手は長い距離を走ることになる。</li>
+<li><strong>高く飛ばす ＝ 滞空時間が長い ＝ 自分がホームポジションに戻る時間を稼げる</strong>。守備的状況からの最も安全な脱出手段。</li>
+<li><strong>奥のぎりぎりまで飛ばす ＝ 相手の打点が低くなる ＝ 相手は攻撃的なショットを打ちにくくなる</strong>。エンドライン付近で打つと、角度のあるスマッシュは物理的に打てない。</li>
+</ul>
+<p>つまりクリアは「守り」のショットに見えて、実は「次の攻めの布石を作る」ショット。クリアの質（深さ・高さ）が低いと、相手にコート中央付近で楽に打たれてしまい、逆に攻められる。</p>
+<h3 id="1-4">1-4. なぜ「ネット前に沈める」のか ─ ヘアピンの戦略的意味</h3>
+<ul>
+<li><strong>ネット前に落とす ＝ 相手は下から打つしかない ＝ 攻撃的な返球がほぼ不可能</strong>。</li>
+<li>相手がロブで返せば、自分が攻撃権を得る（スマッシュやドロップが打てる）。</li>
+<li>相手がヘアピンで返せば、互いにネット前の攻防になり、先にミスした方が失点する。</li>
+<li>ヘアピンの質が高い（白帯ぎりぎりに沈む）ほど、相手はロブを上げるしかなくなる。</li>
+</ul>
+<h3 id="1-5">1-5. 「高さ」の支配がラリーの支配</h3>
+<p>上記の原則をまとめると、バドミントンの攻防は<strong>「シャトルの高さの奪い合い」</strong>に集約される。</p>
+<ul>
+<li><strong>高い打点で打てる ＝ 攻撃的な選択肢が豊富 ＝ 有利</strong></li>
+<li><strong>低い打点で打たされる ＝ 守備的な返球しかできない ＝ 不利</strong></li>
+</ul>
+<p>だからこそ、すべてのショットは「相手に低い打点で打たせる」か「自分が高い打点で打つ」ための手段として理解すべき。</p>
+<hr />
+      </div>
+    </div>
+    
+</div>
+</body>
+</html>
