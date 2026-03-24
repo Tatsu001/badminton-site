@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<title>テクニカル（個人技術） -- バドミントン座学</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #fafaf8;
+  --fg: #1a1a1a;
+  --accent: #1a6b4a;
+  --accent-light: #e8f5ee;
+  --muted: #6b6b6b;
+  --line: #e0e0dc;
+  --sidebar-bg: #f0f0ec;
+  --sidebar-w: 264px;
+  --topbar-h: 50px;
+  --font-body: 'Zen Kaku Gothic New', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; color-scheme: light only; }
+body { font-family: var(--font-body); background-color: #fafaf8 !important; color: #1a1a1a !important; font-size: 15px; line-height: 1.85; }
+
+/* ── Topbar ── */
+.topbar {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  height: var(--topbar-h);
+  background: rgba(250,250,248,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  color: var(--fg);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+}
+.topbar-brand {
+  font-weight: 700; font-size: 14px; color: var(--fg);
+  text-decoration: none; letter-spacing: 0.02em;
+}
+.mobile-toggle { display:none; background:none; border:none; cursor:pointer; padding:6px; }
+.mobile-toggle span {
+  display:block; width:20px; height:2px; background:var(--fg);
+  margin:4px 0; transition:0.2s;
+}
+
+/* ── Layout ── */
+.layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: 100vh;
+  padding-top: var(--topbar-h);
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  background: #f0f0ec;
+  border-right: 1px solid var(--line);
+  position: sticky; top: var(--topbar-h);
+  height: calc(100vh - var(--topbar-h));
+  overflow-y: auto;
+  color: #1a1a1a;
+}
+.sidebar-inner { padding: 20px 0 40px; }
+.sidebar-home {
+  display: block; padding: 8px 24px 16px;
+  font-size: 12px; font-family: var(--font-mono);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+  border-bottom: 1px solid var(--line); margin-bottom: 8px;
+}
+.sidebar-home:hover { color: var(--accent); }
+.sidebar-section { padding: 6px 0; }
+.sidebar-section-title {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); padding: 10px 24px 4px;
+}
+.sidebar-link {
+  display: block; padding: 6px 24px 6px 28px;
+  font-size: 13px; color: #555; text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.sidebar-link:hover { color: var(--fg); background: rgba(0,0,0,0.025); }
+.sidebar-link.active {
+  color: var(--accent); font-weight: 500;
+  border-left-color: var(--accent); background: var(--accent-light);
+}
+
+/* ── Main content ── */
+.main-content {
+  padding: 44px 60px 100px;
+  max-width: 860px;
+  min-width: 0;
+  background-color: #fafaf8;
+  color: #1a1a1a;
+}
+.breadcrumb {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--muted); margin-bottom: 28px; letter-spacing: 0.03em;
+}
+.breadcrumb span { color: var(--accent); }
+.main-content h1 {
+  font-size: 30px; font-weight: 700; margin-bottom: 8px;
+  letter-spacing: -0.01em; line-height: 1.3;
+}
+.subtitle {
+  font-size: 14px; color: var(--muted); margin-bottom: 40px;
+  line-height: 1.7;
+}
+
+/* ── Article body typography ── */
+.article-body h2 {
+  font-size: 21px; font-weight: 700;
+  margin: 52px 0 14px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent); color: var(--fg);
+}
+.article-body h3 {
+  font-size: 17px; font-weight: 700;
+  margin: 36px 0 10px; color: var(--fg);
+  padding-left: 14px; border-left: 3px solid var(--accent);
+}
+.article-body h4 {
+  font-size: 15px; font-weight: 700;
+  margin: 28px 0 8px; color: #333;
+}
+.article-body p {
+  margin-bottom: 14px; color: #333;
+}
+.article-body ul, .article-body ol {
+  margin: 0 0 16px 20px; color: #444;
+}
+.article-body li { margin-bottom: 6px; }
+.article-body li strong { color: var(--fg); }
+.article-body strong { font-weight: 600; }
+
+/* tables */
+.article-body table {
+  width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px;
+}
+.article-body th {
+  background: var(--sidebar-bg); text-align: left; padding: 9px 14px;
+  font-weight: 600; font-size: 12px; color: var(--muted);
+  border-bottom: 2px solid var(--line);
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.article-body td {
+  padding: 10px 14px; border-bottom: 1px solid var(--line); color: #444;
+}
+.article-body tr:last-child td { border-bottom: none; }
+
+/* callout */
+.article-body blockquote {
+  background: var(--accent-light); border-left: 3px solid var(--accent);
+  padding: 16px 20px; margin: 20px 0; font-size: 14px;
+  color: #1a5a3a; border-radius: 0 4px 4px 0;
+}
+.article-body blockquote p { color: #1a5a3a; margin-bottom: 6px; }
+.article-body blockquote p:last-child { margin-bottom: 0; }
+.article-body blockquote strong { color: #115a35; }
+
+/* code */
+.article-body code {
+  background: #eee; padding: 1px 5px; border-radius: 3px;
+  font-family: var(--font-mono); font-size: 0.88em;
+}
+
+/* ── Index page ── */
+.index-content { padding-top: 60px; max-width: 720px; }
+.index-hero-title {
+  font-size: 38px; font-weight: 700; letter-spacing: -0.02em;
+  margin-bottom: 12px; line-height: 1.25;
+}
+.index-hero-sub {
+  font-size: 15px; color: var(--muted); line-height: 1.8;
+  margin-bottom: 48px;
+}
+.index-section-group { margin-bottom: 48px; }
+.index-group-label {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+}
+.index-card {
+  display: block; text-decoration: none; color: var(--fg);
+  padding: 18px 20px; border: 1px solid var(--line);
+  margin-bottom: -1px; transition: background 0.15s, border-color 0.15s;
+}
+.index-card:first-of-type { border-radius: 5px 5px 0 0; }
+.index-card:last-of-type { border-radius: 0 0 5px 5px; }
+.index-card:hover { background: var(--accent-light); border-color: #c8e6d5; z-index:1; position:relative; }
+.index-card-title { font-weight: 700; font-size: 15px; margin-bottom: 3px; }
+.index-card-desc { font-size: 13px; color: var(--muted); }
+.index-card-arrow {
+  float: right; color: var(--accent); font-size: 18px;
+  margin-top: 4px; opacity:0; transition: opacity 0.15s;
+}
+.index-card:hover .index-card-arrow { opacity:1; }
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed; left: -280px; top: var(--topbar-h);
+    width: 280px; height: calc(100vh - var(--topbar-h));
+    z-index: 90; transition: left 0.25s;
+    box-shadow: none;
+  }
+  .sidebar.open { left: 0; box-shadow: 4px 0 20px rgba(0,0,0,0.08); }
+  .mobile-toggle { display: block; }
+  .main-content { padding: 32px 20px 80px; }
+}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="index.html" class="topbar-brand">バドミントン座学</a>
+  <button class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-inner">
+      <a href="index.html" class="sidebar-home">TOP</a>
+      <div class="sidebar-section">
+<div class="sidebar-section-title">概要編</div>
+<a class="sidebar-link" href="rules.html">ルール（前提知識）</a>
+<a class="sidebar-link active" href="technical.html">テクニカル（個人技術）</a>
+<a class="sidebar-link" href="tactical.html">タクティカル（戦術）</a>
+<a class="sidebar-link" href="mental.html">メンタル（心理）</a>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-section-title">実践編</div>
+<a class="sidebar-link" href="principles.html">戦略の根本原則</a>
+<a class="sidebar-link" href="shots.html">球種の実践的理解</a>
+<a class="sidebar-link" href="singles.html">シングルスの試合運び</a>
+<a class="sidebar-link" href="doubles.html">ダブルスの連携</a>
+<a class="sidebar-link" href="framework.html">判断と応用技術</a>
+</div>
+    </div>
+  </nav>
+  
+    <div class="main-content">
+      <div class="breadcrumb">概要編 / <span>テクニカル（個人技術）</span></div>
+      <h1>テクニカル（個人技術）</h1>
+      <p class="subtitle">グリップ・構え、球種の体系、フットワークの原則</p>
+      <div class="article-body">
+        <h3 id="1-1">1-1. グリップ・構え</h3>
+<h4 id="_1">グリップの種類</h4>
+<p>グリップはすべてのショットの土台となる最も基本的な技術。正しいグリップがなければ、どんなショットも正確に打てない。</p>
+<p><strong>イースタングリップ（フォアハンドグリップ）</strong></p>
+<p>最も基本的な握り方。ラケットを地面に対して垂直に立て、上から軽く「握手」するように握る。親指と人差し指でV字を作り、そのV字がグリップの斜めの面に来るようにする。フォアハンド側のほとんどのショット（クリア、スマッシュ、ドロップなど）で使用する。</p>
+<p><strong>ウェスタングリップ（バックハンドグリップ）</strong></p>
+<p>イースタングリップから少しラケットを内側に回転させ、親指をグリップの広い面に立てるように押し当てる。この親指の押し込みがバックハンドショットのパワー源になる。バックハンド側のショット全般で使用する。</p>
+<p><strong>グリップの持ち替え</strong></p>
+<p>試合中はフォアハンドとバックハンドを瞬時に切り替える必要がある。指先の繊細なコントロールで行うため、グリップは強く握りしめず、指先で軽く保持する「フィンガーグリップ」の意識が重要。打つ瞬間だけ力を入れ（フィンガーパワー）、それ以外は緩く握る。</p>
+<p><strong>ショット別の微調整</strong></p>
+<p>ヘアピンやネット前のショットでは、通常より短く持って繊細なコントロールを得る場合がある。また、スマッシュでは力を伝えやすいように少し長めに持つなど、状況に応じた微調整がある。</p>
+<h4 id="_2">構え（レディポジション）</h4>
+<ul>
+<li><strong>基本姿勢</strong>: 足は肩幅よりやや広め、膝を軽く曲げ、上体はやや前傾。重心はつま先寄り（かかとを浮かせるイメージ）。</li>
+<li><strong>ラケットの位置</strong>: 体の前方に構え、ラケットヘッドはやや上向き。どの方向にも素早く対応できる位置。</li>
+<li><strong>高い構え</strong>: ダブルスの前衛や、ネット前での攻撃的な場面。ラケットヘッドを高く構えてプッシュやネットキルに備える。</li>
+<li><strong>低い構え</strong>: スマッシュレシーブなど守備的な場面。ラケットを低めに構えて反応に備える。</li>
+</ul>
+<hr />
+<h3 id="1-2">1-2. 球種（ショットの種類）</h3>
+<p>各球種について、軌道・用途・打ち方のポイントを記載する。</p>
+<h4 id="_3">オーバーヘッドストローク系</h4>
+<p>頭上でシャトルを捉えるショット群。バドミントンの基本となるストロークで、多くのショットがこのフォームから派生する。同じフォームから複数の球種を打ち分けることで、相手にショットを読まれにくくなる。</p>
+<p><strong>クリア</strong></p>
+<p>コート奥から相手コートの奥へシャトルを飛ばすショット。</p>
+<ul>
+<li><strong>ハイクリア</strong>: 高い弧を描いて相手コート最奥に落とす。滞空時間が長いため、自分の体勢を立て直す時間を稼げる。守備的なショット。バックバウンダリーラインぎりぎりまで飛ばすのが理想。</li>
+<li><strong>ドリブンクリア</strong>: 低い弾道で素早く相手コート奥へ飛ばす。滞空時間が短いため、相手の反応時間を奪う攻撃的なクリア。ただし相手のジャンプで捕まると逆にピンチになるリスクがある。</li>
+</ul>
+<p><strong>ドロップ</strong></p>
+<p>コート奥からネット際に落とすショット。スイングスピードをインパクト直前に緩め、押し出すように打つ。スマッシュやクリアと同じフォームから打つことで、フェイント効果を高められる。球速が遅いため、相手に読まれると失点につながる。打点が頭より後ろにならないよう注意。</p>
+<p><strong>カットショット</strong></p>
+<p>ドロップと似た軌道だが、ラケット面を斜めにしてシャトルのコルク部分を「切る」ように打つ。ドロップより鋭い角度で落下し、スピードもある。スマッシュに近いスイングスピードで振るためフェイント効果が高い。</p>
+<ul>
+<li><strong>ノーマルカット</strong>: ラケットの面を右利きなら右から左に切る。</li>
+<li><strong>リバースカット</strong>: 逆方向に切る。通常のカットとは球の落ち方が異なり、相手の意表を突ける。</li>
+</ul>
+<p><strong>スマッシュ</strong></p>
+<p>バドミントンの代名詞的な攻撃ショット。シャトルを上から鋭角に相手コートに叩きつける。世界トップ選手のスマッシュ初速は時速400km/hに迫る。</p>
+<ul>
+<li><strong>フルスマッシュ</strong>: 全力で打ち込む。最も速いが体力消耗が大きい。</li>
+<li><strong>ハーフスマッシュ</strong>: 7割程度の力で打つ。次の体勢への移行がしやすく、連続攻撃に向く。</li>
+<li><strong>ジャンピングスマッシュ</strong>: ジャンプして打つことで打点が高くなり、より鋭い角度がつく。</li>
+<li><strong>カットスマッシュ</strong>: スマッシュの動作で面を切って打つ。速度は落ちるが軌道が変わり読みづらい。</li>
+</ul>
+<h4 id="_4">サイドアーム系</h4>
+<p>体の横あたりでシャトルを捉えるショット群。</p>
+<p><strong>ドライブ</strong></p>
+<p>地面とほぼ平行な軌道でネットすれすれを飛ぶ速いショット。フォアハンドとバックハンドの両方がある。ダブルスで特に多用される。相手の肩口（利き手側）を狙うと効果的。ドライブの応酬（ドライブ戦）はダブルスの見どころのひとつ。</p>
+<p><strong>レシーブ</strong></p>
+<p>相手のスマッシュやプッシュに対する返球。</p>
+<ul>
+<li><strong>ドライブレシーブ</strong>: ドライブ気味に低く速い軌道で返す。攻撃的なレシーブ。</li>
+<li><strong>ロブ系レシーブ</strong>: 大きく高く相手コート奥へ返す。時間を稼ぎ体勢を立て直す守備的なレシーブ。</li>
+</ul>
+<h4 id="_5">アンダーハンド系</h4>
+<p>腰より低い位置でシャトルを捉えるショット群。ラケットを下から上に振り上げて打つ。</p>
+<p><strong>ロブ（ロビング）</strong></p>
+<p>ネット前から相手コート奥へ大きく高く打ち上げるショット。</p>
+<ul>
+<li><strong>ハイロブ</strong>: 高い弧を描いて奥へ飛ばす。体勢を立て直す時間が稼げる守備的なロブ。</li>
+<li><strong>アタックロブ</strong>: 低い弾道で速く奥へ飛ばす攻撃的なロブ。相手をコート後方に追い込む。ただしカウンターを受けるリスクもある。</li>
+</ul>
+<p><strong>ヘアピン</strong></p>
+<p>ネット前に落ちてきたシャトルを、ネットの白帯すれすれに相手コートのネット前に返すショット。名前の由来は横から見た軌道がヘアピン（髪留め）に似ていることから。</p>
+<ul>
+<li><strong>ノーマルヘアピン</strong>: シャトルをそっと押し出すように打つ基本形。</li>
+<li><strong>スピンネット</strong>: シャトルに回転（スピン）をかけて打つ。シャトルが不規則に揺れながら落ちるため返球が難しい。</li>
+<li><strong>クロスネット</strong>: ヘアピンと見せかけてクロス方向（対角線）に打つ。相手の逆を突ける。</li>
+</ul>
+<h4 id="_6">ネット前のショット</h4>
+<p><strong>プッシュ</strong></p>
+<p>ネット前に浮いたシャトルを、相手コートに向けて押し込むように打つ攻撃的なショット。バドミントンのショットの中で最も決定率が高いとされる。</p>
+<ul>
+<li><strong>ワイパーショット</strong>: ネット白帯ぎりぎりのシャトルに対し、車のワイパーのようにラケットを横に動かして打つプッシュの変形。</li>
+</ul>
+<p><strong>ネットキル</strong></p>
+<p>ネットより高い位置に浮いたシャトルを、上から叩きつけて決める。プッシュよりも鋭角に打ち込むため、ほぼ決まり球となる。</p>
+<h4 id="_7">サーブ</h4>
+<p><strong>ロングサーブ（ハイサーブ）</strong></p>
+<p>フォアハンドで大きく振り、高い弧を描いて相手コートの最奥に飛ばすサーブ。主にシングルスで使用。相手にスマッシュを打たせないよう、十分な高さと奥行きが必要。</p>
+<p><strong>ショートサーブ</strong></p>
+<p>ネットすれすれを通して、相手コートのショートサービスライン付近に落とすサーブ。ダブルスではこれが主流。</p>
+<ul>
+<li><strong>バックハンドショートサーブ</strong>: コントロールしやすく、ダブルスで最も多用される。</li>
+<li><strong>フォアハンドショートサーブ</strong>: シングルスで使用されることがある。</li>
+</ul>
+<p><strong>フリックサーブ</strong></p>
+<p>ショートサーブと同じ構えから、手首のスナップで急にシャトルを奥へ飛ばすサーブ。ショートサーブを待ち構えている相手の意表を突く。</p>
+<p><strong>ドリブンサーブ</strong></p>
+<p>低い弾道で速く相手コートに打ち込むサーブ。相手の反応時間を奪うが、速度が十分でないと叩かれるリスクがある。</p>
+<h4 id="_8">特殊技術</h4>
+<p><strong>ハイバック</strong></p>
+<p>バックハンド側のコート奥に追い込まれた際、体を背中側に向けた状態で頭上後方のシャトルを打つ技術。独特のフォームと手首のスナップが必要で、習得難易度が高い。相手コート奥までしっかり飛ばせると守備力が大幅に向上する。</p>
+<p><strong>ラウンドザヘッド</strong></p>
+<p>フォアハンドでバックハンド側の頭上のシャトルを回り込んで打つ技術。ハイバックより攻撃的なショットが打てるが、体のバランスを崩しやすく戻りが遅くなるリスクがある。</p>
+<p><strong>ディセプション（フェイント）</strong></p>
+<p>相手を欺くためのテクニック全般。インパクト直前にラケット面の角度や振りの方向を変えて、予想と違う方向にシャトルを飛ばす。「タメ」を作ることで相手の判断を遅らせるのも重要なディセプション技術。スマッシュのフォームからドロップを打つ、ヘアピンと見せかけてロブを上げるなど、あらゆるショットの組み合わせで応用できる。</p>
+<hr />
+<h3 id="1-3">1-3. フットワーク</h3>
+<p>フットワークはバドミントンにおいて最も重要な技術のひとつ。いかに良いショットを持っていても、シャトルに届かなければ意味がない。</p>
+<h4 id="_9">基本ステップの種類</h4>
+<ul>
+<li><strong>サイドステップ（シャセ）</strong>: 横方向への移動。片足を踏み出し、もう片足を引き寄せる動き。短距離の横移動に使う。</li>
+<li><strong>クロスステップ</strong>: 進行方向の足に逆足を交差させながら進む。比較的長い距離を素早くカバーできる。</li>
+<li><strong>ランニングステップ</strong>: 通常の走る動きに近いステップ。長い距離を移動する際に使う。</li>
+<li><strong>ツーステップ（送り足・継ぎ足）</strong>: 片足を出してもう片足を送る動き。短距離の微調整に使う。</li>
+<li><strong>スキップターン</strong>: 後方に下がる際に使う回転を伴うステップ。半身になってターンしながら後退する。</li>
+</ul>
+<h4 id="6">6方向のフットワーク</h4>
+<p>ホームポジション（コート中央付近）から6方向への移動を体系的に練習する。</p>
+<ol>
+<li><strong>フォア前</strong>（右前）: サイドステップまたはランジで前に踏み込む</li>
+<li><strong>バック前</strong>（左前）: クロスステップで左前方に移動</li>
+<li><strong>フォアサイド</strong>（右横）: サイドステップで横移動</li>
+<li><strong>バックサイド</strong>（左横）: サイドステップで横移動</li>
+<li><strong>フォア奥</strong>（右後方）: 半身になりサイドステップ・クロスステップで後退</li>
+<li><strong>バック奥</strong>（左後方）: 半身になり後退。ハイバックまたはラウンドザヘッドで対応</li>
+</ol>
+<p>※右利き選手の場合の方向。左利きは左右が逆になる。</p>
+<h4 id="_10">打点の高さ別の対応</h4>
+<p>同じ方向でも、シャトルの高さによって使うステップや打ち方が異なる。高い打点では攻撃的なショットが打てるが、低い打点では守備的な返球になりやすい。なるべく高い打点で捉える意識が重要。</p>
+<h4 id="_11">リアクションステップ／スプリットステップ</h4>
+<ul>
+<li>相手がシャトルを打つ直前にその場で小さくジャンプし、着地の反動を利用して素早く動き出す技術。</li>
+<li>動き出しのスピードが格段に向上する。</li>
+<li>バドミントンではこれを「リアクションステップ」「スプリットステップ」「チャイナステップ」などと呼ぶ（厳密には微妙に異なるが、初学段階では「着地の反動で素早く動き出す」と理解すればよい）。</li>
+<li>沈み込むタイプ、ジャンプするタイプなど、選手によってバリエーションがある。</li>
+</ul>
+<h4 id="_12">ホームポジションへの戻り</h4>
+<p>ショットを打った後は素早くホームポジション（コート中央付近）に戻るのが基本。戻りが遅いとオープンスペースを突かれる。シングルスでは特にこの「打って戻る」の繰り返しが基本中の基本。</p>
+<h4 id="_13">ランジ・飛びつき</h4>
+<p>ネット前や横方向の遠いシャトルに対して、大きく足を踏み出して捉える技術。最終ステップのランジ（踏み込み）は、かかとから着地して膝がつま先より前に出ないようにすることが怪我防止のポイント。</p>
+<hr />
+      </div>
+    </div>
+    
+</div>
+</body>
+</html>
