@@ -119,16 +119,31 @@ body { font-family: var(--font-body); background-color: #fafaf8 !important; colo
 }
 .article-body h4 {
   font-size: 15px; font-weight: 700;
-  margin: 32px 0 10px; color: #2a2a2a;
+  margin: 36px 0 12px; color: var(--fg);
+  padding: 8px 0 8px 12px;
+  border-left: 3px solid #b0cdbf;
+  background: rgba(26,107,74,0.03);
+  border-radius: 0 3px 3px 0;
 }
 .article-body p {
   margin-bottom: 16px; color: #2a2a2a;
 }
+
+/* sub-label: bold paragraphs acting as category names (e.g. shot types) */
+.article-body .sub-label {
+  font-size: 15px; font-weight: 700; color: var(--fg);
+  margin: 28px 0 6px; padding: 0 0 4px;
+  border-bottom: 1px dashed #c8d8cf;
+  display: inline-block;
+}
+
 .article-body ul, .article-body ol {
   margin: 0 0 18px 20px; color: #3a3a3a;
 }
 .article-body li { margin-bottom: 8px; line-height: 1.85; }
-.article-body li strong { color: var(--fg); }
+.article-body li strong {
+  color: var(--accent); font-weight: 600;
+}
 .article-body strong { font-weight: 600; }
 
 /* tables */
