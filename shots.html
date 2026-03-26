@@ -215,5 +215,9 @@
     </div>
     
 </div>
+<button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="トップに戻る">↑</button>
+<script>
+(function(){var b=document.querySelector('.back-to-top');window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300)})})();
+</script>
 </body>
 </html>
