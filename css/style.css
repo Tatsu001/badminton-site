@@ -31,7 +31,7 @@ body { font-family: var(--font-body); background-color: #fafaf8 !important; colo
   font-weight: 700; font-size: 14px; color: var(--fg);
   text-decoration: none; letter-spacing: 0.02em;
 }
-.mobile-toggle { display:none; background:none; border:none; cursor:pointer; padding:6px; }
+.mobile-toggle { display:none; background:none; border:none; cursor:pointer; padding:6px; margin-right: 12px; }
 .mobile-toggle span {
   display:block; width:20px; height:2px; background:var(--fg);
   margin:4px 0; transition:0.2s;
